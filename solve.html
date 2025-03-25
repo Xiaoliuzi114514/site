@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二次方程求解器</title>
+</head>
+<body>
+    <script>
+        // 获取用户输入
+        let a = parseFloat(prompt("请输入系数 a (a > 0):"));
+        let b = parseFloat(prompt("请输入系数 b:"));
+        let c = parseFloat(prompt("请输入系数 c:"));
+        
+        // 确保 a 合法
+        if (a <= 0 || isNaN(a) || isNaN(b) || isNaN(c)) {
+            alert("输入错误，请输入有效的数字，并确保 a > 0");
+        } else {
+            // 计算判别式 delta
+            let delta = b * b - 4 * a * c;
+            
+            if (delta < 0) {
+                alert("无实数解，判别式 delta 小于 0");
+                console.log("无实数解，判别式 delta 小于 0");
+            } else {
+                // 计算 x1 和 x2
+                let x1 = (-b + Math.sqrt(delta)) / (2 * a);
+                let x2 = (-b - Math.sqrt(delta)) / (2 * a);
+                
+                // 显示结果
+                alert(`方程的解为：\nx1 = ${x1}\nx2 = ${x2}`);
+                console.log(`方程的解为：\nx1 = ${x1}\nx2 = ${x2}`);
+            }
+        }
+    </script>
+</body>
+</html>
