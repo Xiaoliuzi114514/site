@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Flying Balloons</title>
+    <style>
+        #canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body class="flex justify-center items-center h-screen bg-gray-100">
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const colors = ['red', 'orange', 'yellow', 'green', 'black', 'blue', 'purple'];
+        const balloons = [];
+
+        class Balloon {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height;
+                this.diameter = Math.random() * 20 + 20;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.riseSpeed = Math.random() * 2 + 1;
+                this.growthRate = Math.random() * 0.05 + 0.01;
+                this.burstAltitude = Math.random() * (canvas.height * 0.7) + canvas.height * 0.2;
+            }
+
+            update() {
+                this.y -= this.riseSpeed;
+                this.diameter += this.growthRate;
+
+                if (this.y < this.burstAltitude) {
+                    const index = balloons.indexOf(this);
+                    if (index > -1) {
+                        balloons.splice(index, 1);
+                    }
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.diameter / 2, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+
+        function createBalloon() {
+            const balloon = new Balloon();
+            balloons.push(balloon);
+        }
+
+        setInterval(createBalloon, 1000);
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < balloons.length; i++) {
+                const balloon = balloons[i];
+                balloon.update();
+                balloon.draw();
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+
+</html>
+    

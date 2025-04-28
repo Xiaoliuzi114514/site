@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Name List Sorting</title>
+</head>
+<body>
+
+<h2>Names List</h2>
+
+<table border="1">
+    <tr>
+        <th>First Name</th>
+    </tr>
+    <tr><td>Charlie</td></tr>
+    <tr><td>Bob</td></tr>
+    <tr><td>Alice</td></tr>
+    <tr><td>David</td></tr>
+</table>
+
+<script>
+window.onload = sortbylastname;
+
+let sortbylastname = function() {
+    let tbl = document.getElementsByTagName('table')[0];
+    let rowsArray = [];
+    for (let i = 1; i < tbl.rows.length; i++) {
+        rowsArray.push(tbl.rows[i]);
+    }
+    rowsArray.sort(function(rowA, rowB) {
+        let nameA = rowA.cells[0].innerHTML.toLowerCase();
+        let nameB = rowB.cells[0].innerHTML.toLowerCase();
+        if (nameA < nameB) return -1;
+        if (nameA > nameB) return 1;
+        return 0;
+    });
+    while (tbl.rows.length > 1) {
+        tbl.deleteRow(1);
+    }
+    for (let i = 0; i < rowsArray.length; i++) {
+        tbl.appendChild(rowsArray[i]);
+    }
+}
+</script>
+
+</body>
+</html>
